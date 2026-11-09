@@ -109,7 +109,7 @@ class ReservationController
         $message = trim((string) ($_GET['mensaje'] ?? ''));
         $error = trim((string) ($_GET['error'] ?? ''));
         $demoPaymentsEnabled = PaymentModel::demoModeEnabled();
-        $mercadoPagoEnabled = trim((string) (getenv('MP_ACCESS_TOKEN') ?: '')) !== '';
+        $mercadoPagoEnabled = !$demoPaymentsEnabled && trim((string) (getenv('MP_ACCESS_TOKEN') ?: '')) !== '';
         require __DIR__ . '/../views/reservations.php';
     }
 

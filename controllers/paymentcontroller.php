@@ -35,6 +35,9 @@ class PaymentController
                 header('Location: reservas.php?mensaje=' . rawurlencode('Pago simulado. Ya podés descargar el comprobante.'), true, 303);
                 exit;
             }
+            if (PaymentModel::demoModeEnabled()) {
+                throw new DomainException('La aplicación está en modo de simulación; no se pueden iniciar cobros reales.');
+            }
             $url = $model->checkoutForCustomer((int) $user['id'], (int) $reservationId);
             header('Location: ' . $url, true, 303);
             exit;
@@ -72,7 +75,7 @@ class PaymentController
 
         $isDemo = $details['proveedor'] === 'simulacion';
         $lines = [
-            'Comprobante de pago - Servicios Tecnicos',
+            'Comprobante de pago - ServiClick',
             'Numero: ' . (int) $details['pago_id'] . '    Reserva: ' . (int) $details['reserva_id'],
             'Fecha de emision: ' . date('d/m/Y H:i:s'),
             'Cliente: ' . $details['cliente'] . ' (' . $details['email'] . ')',

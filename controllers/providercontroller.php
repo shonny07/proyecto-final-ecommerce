@@ -244,7 +244,6 @@ class ProviderController
             $availabilityBlocks = $providerModel->availability($providerId);
             usort($availabilityBlocks, static fn(array $a, array $b): int => strcmp((string) ($a['inicio'] ?? ''), (string) ($b['inicio'] ?? '')));
             $categories = $providerModel->categories();
-            $availableServices = $providerModel->availableServices($providerId);
             $offers = $providerModel->offers($providerId);
             $presentation = $presentationModel->cardForProvider($providerId);
         } catch (PDOException $exception) {

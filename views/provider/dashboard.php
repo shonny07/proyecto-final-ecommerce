@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis servicios | Servicios Técnicos</title>
+    <title>Mis servicios | ServiClick</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="index.php">Servicios<span>Técnicos</span></a>
+        <a class="brand" href="index.php"><span class="brand-name">Servi<span class="brand-accent">Click</span></span><img class="brand-icon" src="assets/serviclick-click.png" alt=""></a>
         <nav aria-label="Navegación principal">
             <span class="nav-greeting">Hola, <?= htmlspecialchars($currentUser['nombre'], ENT_QUOTES, 'UTF-8') ?></span>
             <a href="index.php">Ver catálogo</a>
@@ -142,9 +142,40 @@
             <div class="provider-card-heading">
                 <div>
                     <p class="eyebrow">Paso 3</p>
-                    <h2><?= $offers === [] ? 'Publicá tu primer servicio' : 'Tus servicios publicados' ?></h2>
+                    <h2>Crear y administrar servicios</h2>
                 </div>
                 <span><?= count($offers) ?> publicados</span>
+            </div>
+
+            <div class="provider-service-actions">
+                <?php if ($categories !== []): ?>
+                    <details class="provider-action-details service-create-panel" <?= $offers === [] ? 'open' : '' ?>>
+                        <summary><span class="service-action-badge">Crear uno</span>Crear un servicio nuevo</summary>
+                        <form class="provider-form" method="post" action="provider.php">
+                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
+                            <input type="hidden" name="action" value="crear_servicio">
+                            <label>
+                                <span>Nombre del servicio</span>
+                                <input type="text" name="nombre_servicio" maxlength="150" required placeholder="Ej.: Reparación de calefón">
+                            </label>
+                            <label>
+                                <span>Rubro</span>
+                                <select name="categoria_id" required>
+                                    <option value="">Elegí un rubro</option>
+                                    <?php foreach ($categories as $category): ?>
+                                        <option value="<?= (int) $category['id'] ?>">
+                                            <?= htmlspecialchars(($category['nombre_padre'] ? $category['nombre_padre'] . ' · ' : '') . $category['nombre'], ENT_QUOTES, 'UTF-8') ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </label>
+                            <?php require __DIR__ . '/offer_fields.php'; ?>
+                            <button class="auth-submit" type="submit">Crear y publicar</button>
+                        </form>
+                    </details>
+                <?php else: ?>
+                    <p class="provider-help">Todavía no hay rubros. Pedile al administrador que cargue categorías para poder crear un servicio.</p>
+                <?php endif; ?>
             </div>
 
             <?php if ($offers !== []): ?>
@@ -209,62 +240,8 @@
                     <?php endforeach; ?>
                 </div>
             <?php else: ?>
-                <p class="provider-help">Todavía no tenés servicios publicados. Elegí uno del catálogo o creá el primero.</p>
+                <p class="provider-help">Todavía no tenés servicios publicados. Cuando crees uno, va a aparecer acá.</p>
             <?php endif; ?>
-
-            <div class="provider-service-actions">
-                <?php if ($offers === [] && $availableServices !== []): ?>
-                    <details class="provider-action-details service-pick-panel" <?= $offers === [] ? 'open' : '' ?>>
-                        <summary><?= $offers === [] ? 'Elegir un servicio del catálogo' : 'Agregar un servicio del catálogo' ?></summary>
-                        <form class="provider-form" method="post" action="provider.php">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
-                            <input type="hidden" name="action" value="agregar_existente">
-                            <label>
-                                <span>Servicio</span>
-                                <select name="servicio_id" required>
-                                    <option value="">Elegí un servicio</option>
-                                    <?php foreach ($availableServices as $service): ?>
-                                        <option value="<?= (int) $service['id'] ?>"><?= htmlspecialchars($service['categoria'] . ' · ' . $service['nombre'], ENT_QUOTES, 'UTF-8') ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <?php require __DIR__ . '/offer_fields.php'; ?>
-                            <button class="auth-submit" type="submit">Publicar servicio</button>
-                        </form>
-                    </details>
-                <?php elseif ($offers === [] && $availableServices === []): ?>
-                    <p class="provider-help">No hay servicios en el catálogo para elegir. Podés crear uno nuevo abajo.</p>
-                <?php endif; ?>
-
-                <?php if ($categories !== []): ?>
-                    <details class="provider-action-details service-create-panel" <?= $offers === [] && $availableServices === [] ? 'open' : '' ?>>
-                        <summary><span class="service-action-badge">Nuevo</span>Crear un servicio nuevo</summary>
-                        <form class="provider-form" method="post" action="provider.php">
-                            <input type="hidden" name="csrf_token" value="<?= htmlspecialchars(csrfToken(), ENT_QUOTES, 'UTF-8') ?>">
-                            <input type="hidden" name="action" value="crear_servicio">
-                            <label>
-                                <span>Nombre del servicio</span>
-                                <input type="text" name="nombre_servicio" maxlength="150" required placeholder="Ej.: Reparación de calefón">
-                            </label>
-                            <label>
-                                <span>Rubro</span>
-                                <select name="categoria_id" required>
-                                    <option value="">Elegí un rubro</option>
-                                    <?php foreach ($categories as $category): ?>
-                                        <option value="<?= (int) $category['id'] ?>">
-                                            <?= htmlspecialchars(($category['nombre_padre'] ? $category['nombre_padre'] . ' · ' : '') . $category['nombre'], ENT_QUOTES, 'UTF-8') ?>
-                                        </option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </label>
-                            <?php require __DIR__ . '/offer_fields.php'; ?>
-                            <button class="auth-submit" type="submit">Crear y publicar</button>
-                        </form>
-                    </details>
-                <?php else: ?>
-                    <p class="provider-help">Todavía no hay rubros. Pedile al administrador que cargue categorías para poder crear un servicio.</p>
-                <?php endif; ?>
-            </div>
         </section>
 
         <section class="provider-card">
@@ -306,7 +283,7 @@
         </section>
     </main>
 
-    <footer class="site-footer"><p>Servicios Técnicos</p></footer>
+    <footer class="site-footer"><p>ServiClick</p></footer>
     <script>
         document.querySelectorAll('[data-weekly-day]').forEach((dayRow) => {
             const formatSelect = dayRow.querySelector('[data-schedule-format]');

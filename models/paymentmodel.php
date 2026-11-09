@@ -140,7 +140,10 @@ class PaymentModel
 
         try {
             $response = $this->request('POST', 'https://api.mercadopago.com/checkout/preferences', $token, $preference);
-            $checkoutUrl = (string) ($response['init_point'] ?? '');
+            $environment = strtolower(trim((string) (getenv('MP_ENVIRONMENT') ?: 'test')));
+            $checkoutUrl = $environment === 'production'
+                ? (string) ($response['init_point'] ?? '')
+                : (string) ($response['sandbox_init_point'] ?? '');
             $preferenceId = (string) ($response['id'] ?? '');
             if ($checkoutUrl === '' || $preferenceId === '') {
                 throw new RuntimeException('Mercado Pago no devolvió una URL de pago válida.');

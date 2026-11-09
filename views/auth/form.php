@@ -9,12 +9,12 @@ $formAction = $isSetup ? 'setup_admin.php' : ($isLogin ? 'login.php' : 'registro
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?> | Servicios Técnicos</title>
+    <title><?= htmlspecialchars($title, ENT_QUOTES, 'UTF-8') ?> | ServiClick</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body class="auth-page">
     <header class="site-header">
-        <a class="brand" href="index.php">Servicios<span>Técnicos</span></a>
+        <a class="brand" href="index.php"><span class="brand-name">Servi<span class="brand-accent">Click</span></span><img class="brand-icon" src="assets/serviclick-click.png" alt=""></a>
         <nav aria-label="Navegación principal"><a href="index.php">Volver al catálogo</a></nav>
     </header>
 
@@ -79,6 +79,6 @@ $formAction = $isSetup ? 'setup_admin.php' : ($isLogin ? 'login.php' : 'registro
         </section>
     </main>
 
-    <footer class="site-footer"><p>Servicios Técnicos</p></footer>
+    <footer class="site-footer"><p>ServiClick</p></footer>
 </body>
 </html>

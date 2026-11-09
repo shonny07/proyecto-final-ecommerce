@@ -29,9 +29,12 @@ Configura estas variables de entorno en Apache antes de iniciar XAMPP. No guarde
 - `MP_ACCESS_TOKEN`: Access Token privado de la aplicación de Mercado Pago.
 - `MP_WEBHOOK_SECRET`: clave secreta de Webhooks para validar notificaciones firmadas.
 - `MP_PUBLIC_BASE_URL`: URL pública HTTPS del proyecto, sin barra final; por ejemplo `https://tu-dominio.example`. No uses `localhost`.
+- `MP_ENVIRONMENT`: usar `test` durante el desarrollo y `production` solamente al habilitar cobros reales. Si no se define, se usa `test`.
 
 En Tus integraciones, configura la URL de Webhooks como `https://tu-dominio.example/webhook_mercadopago.php` y selecciona eventos de pagos. Para probar desde XAMPP local hace falta exponer temporalmente el servidor mediante una URL HTTPS pública. El cobro de esta versión se acredita en la cuenta vinculada al Access Token.
 
 ## Modo de demostración académica
 
 `PAYMENT_DEMO_MODE` habilita el botón para simular pagos con débito, crédito o transferencia y descargar un PDF. El modo está habilitado por defecto para facilitar la presentación local y no envía solicitudes a Mercado Pago ni mueve dinero. Cada registro queda identificado como `simulacion` y el PDF aclara que es una demostración, no una transacción real ni un comprobante fiscal. Configura `PAYMENT_DEMO_MODE=0` en Apache antes de publicar el sitio.
+
+Mientras `PAYMENT_DEMO_MODE=1`, la interfaz oculta Mercado Pago y el servidor rechaza intentos directos de iniciar un cobro real, incluso si hubiera un Access Token configurado.

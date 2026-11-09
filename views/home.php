@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Servicios Técnicos</title>
+    <title>ServiClick</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <header class="site-header site-header-home">
         <div class="site-bar">
-            <a class="brand" href="index.php">Servicios<span>Técnicos</span></a>
+            <a class="brand" href="index.php"><span class="brand-name">Servi<span class="brand-accent">Click</span></span><img class="brand-icon" src="assets/serviclick-click.png" alt=""></a>
             <nav aria-label="Navegación principal">
             <a href="#servicios">Servicios</a>
             <?php if ($currentUser !== null): ?>
@@ -74,8 +74,8 @@
     <main>
         <section class="hero">
             <div class="hero-copy">
-                <p class="eyebrow">Soluciones para tu hogar y negocio</p>
-                <h1>Encontrá el servicio técnico que necesitás.</h1>
+                <p class="eyebrow">Todo lo que necesitas a un click</p>
+                <h1>Encontra el servicio que necesitás, fácil y rápido.</h1>
                 <p class="hero-text">Explorá servicios y conocé a los prestadores disponibles.</p>
                 <form class="search-form" action="index.php" method="get" role="search">
                     <label class="visually-hidden" for="q">Buscar servicios, rubros o prestadores</label>
@@ -163,7 +163,7 @@
     </main>
 
     <footer class="site-footer">
-        <p>Servicios Técnicos</p>
+        <p>ServiClick</p>
     </footer>
     <script>
         document.querySelectorAll('.booking-form').forEach((form) => {

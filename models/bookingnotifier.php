@@ -75,7 +75,7 @@ class BookingNotifier
             $body .= "\nReserva: " . (int) $details['id'] . "\n"
                 . 'Turno: ' . date('d/m/Y H:i', strtotime($details['fecha_hora']))
                 . ' a ' . date('d/m/Y H:i', strtotime($details['fecha_hora_fin'])) . "\n\n"
-                . "Gracias por usar Servicios Técnicos.\n";
+                . "Gracias por usar ServiClick.\n";
             $headers = "From: {$from}\r\nContent-Type: text/plain; charset=UTF-8\r\n";
             $sent = @mail((string) $details['email_cliente'], $subject, $body, $headers);
             if (!$sent) {

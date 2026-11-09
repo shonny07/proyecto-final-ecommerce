@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrar categorías | Servicios Técnicos</title>
+    <title>Administrar categorías | ServiClick</title>
     <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
     <header class="site-header">
-        <a class="brand" href="index.php">Servicios<span>Técnicos</span></a>
+        <a class="brand" href="index.php"><span class="brand-name">Servi<span class="brand-accent">Click</span></span><img class="brand-icon" src="assets/serviclick-click.png" alt=""></a>
         <nav aria-label="Navegación principal">
             <span class="nav-greeting">Hola, <?= htmlspecialchars($currentUser['nombre'], ENT_QUOTES, 'UTF-8') ?></span>
             <a href="index.php">Ver catálogo</a>
@@ -138,6 +138,6 @@
         </section>
     </main>
 
-    <footer class="site-footer"><p>Servicios Técnicos</p></footer>
+    <footer class="site-footer"><p>ServiClick</p></footer>
 </body>
 </html>
