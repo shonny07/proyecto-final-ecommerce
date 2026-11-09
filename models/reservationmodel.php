@@ -193,6 +193,8 @@ class ReservationModel
                     (SELECT pg.metodo_pago FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_metodo,
                     (SELECT pg.estado FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_estado,
                     (SELECT pg.confirmacion FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_confirmado,
+                    (SELECT COUNT(*) FROM conversacion c INNER JOIN mensaje m ON m.id_conversacion = c.id
+                     WHERE c.id_reserva = r.id AND m.id_emisor <> r.id_cliente AND m.leido_en IS NULL) AS mensajes_sin_leer,
                     ca.estrellas, ca.comentario AS opinion
              FROM reserva AS r
              INNER JOIN servicio AS s ON s.id = r.id_servicio
@@ -234,9 +236,12 @@ class ReservationModel
                     (SELECT pg.proveedor FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_proveedor,
                     (SELECT pg.metodo_pago FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_metodo,
                     (SELECT pg.confirmacion FROM pagos pg WHERE pg.id_reserva = r.id ORDER BY pg.id DESC LIMIT 1) AS pago_confirmado,
+                    (SELECT COUNT(*) FROM conversacion c INNER JOIN mensaje m ON m.id_conversacion = c.id
+                     WHERE c.id_reserva = r.id AND m.id_emisor <> p.id_user AND m.leido_en IS NULL) AS mensajes_sin_leer,
                     s.nombre AS servicio, u.nombre AS cliente
              FROM reserva AS r
              INNER JOIN servicio AS s ON s.id = r.id_servicio
+             INNER JOIN prestador AS p ON p.id = r.id_prestador
              INNER JOIN usuario AS u ON u.id = r.id_cliente
              WHERE r.id_prestador = :provider_id
              ORDER BY r.fecha_hora DESC'

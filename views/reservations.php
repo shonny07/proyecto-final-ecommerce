@@ -35,6 +35,7 @@
                             <time><?= htmlspecialchars(date('d/m/Y H:i', strtotime($reservation['fecha_hora'])) . ' — ' . date($endFormat, strtotime($reservation['fecha_hora_fin'])), ENT_QUOTES, 'UTF-8') ?></time>
                         </div>
                         <p><?= $role === 'prestador' ? 'Cliente: ' . htmlspecialchars($reservation['cliente'], ENT_QUOTES, 'UTF-8') : 'Prestador: ' . htmlspecialchars($reservation['prestador'], ENT_QUOTES, 'UTF-8') ?></p>
+                        <a class="small-button reservation-message-link" href="mensajes.php?reserva=<?= (int) $reservation['id'] ?>">Abrir conversación<?php if ((int) ($reservation['mensajes_sin_leer'] ?? 0) > 0): ?> <span class="unread-message-count"><?= (int) $reservation['mensajes_sin_leer'] ?> nuevo<?= (int) $reservation['mensajes_sin_leer'] === 1 ? '' : 's' ?></span><?php endif; ?></a>
                         <p><strong>Importe acordado:</strong> $<?= number_format((float) $reservation['precio_acordado'], 2, ',', '.') ?> ARS</p>
                         <?php $paymentLabels = ['approved' => 'Confirmado', 'pending' => 'Pendiente', 'in_process' => 'En proceso', 'rejected' => 'Rechazado', 'cancelled' => 'Cancelado', 'refunded' => 'Reembolsado', 'charged_back' => 'Desconocido por contracargo', 'error' => 'No se pudo iniciar', 'simulado_aprobado' => 'Aprobado (simulación)']; ?>
                         <p><strong>Pago:</strong>
